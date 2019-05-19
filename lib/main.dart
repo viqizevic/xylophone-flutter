@@ -18,9 +18,12 @@ class Xylophone extends StatefulWidget {
 }
 
 class _XylophoneState extends State<Xylophone> {
+  String passCode = '';
+
   void playSound(int soundNumber) {
     final player = AudioCache();
     player.play('note$soundNumber.wav');
+    addToCode(soundNumber);
   }
 
   Expanded buildKey({Color color, int note}) {
@@ -32,6 +35,25 @@ class _XylophoneState extends State<Xylophone> {
         },
       ),
     );
+  }
+
+  void addToCode(int number) {
+    passCode = '$passCode$number';
+    checkCode();
+    if (8 == number) {
+      passCode = '';
+    }
+  }
+
+  void checkCode() {
+    if ('77777' == passCode) {
+      playSong();
+    }
+  }
+
+  void playSong() {
+    final player = AudioCache();
+    player.play('song1.mp3');
   }
 
   @override
@@ -48,7 +70,8 @@ class _XylophoneState extends State<Xylophone> {
             buildKey(note: 4, color: Colors.green),
             buildKey(note: 5, color: Colors.teal),
             buildKey(note: 6, color: Colors.blue),
-            buildKey(note: 7, color: Colors.purple),
+            buildKey(note: 7, color: Colors.blue.shade900),
+            buildKey(note: 8, color: Colors.purple.shade700),
           ],
         ),
       ),
